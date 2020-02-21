@@ -1,1 +1,1 @@
-# Termostat Devrleri eğitim öğretim amaçlı devrelerdir.
+# Termostat Devreleri eğitim öğretim amaçlı devrelerdir.
