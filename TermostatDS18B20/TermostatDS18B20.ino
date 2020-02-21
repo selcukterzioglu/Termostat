@@ -103,8 +103,8 @@ void setup()
     EEPROM_readAll(0, sistem);          //EEPROM'u oku
     if(sistem.eepIlkCalisma > 1){       //Eğer ilk çalışma ise değerleri kur
         sistem.eepIlkCalisma = 1;
-        sistem.eepDereceSet = 2500;
-        sistem.eepTolerans = 100;
+        sistem.eepDereceSet = 250;
+        sistem.eepTolerans = 10;
         EEPROM_writeAll(0, sistem);
     }
     dereceSet = sistem.eepDereceSet;
@@ -160,16 +160,16 @@ void gostergeYaz()
     case GOSTERGE_MODU_DERECE:
         gostergeData = derece;
         if (gostergeData < 0)
-            gosterge.gostergeGuncelle(gostergeData / 10, 1, EKSI, BASA_EKLE);
+            gosterge.gostergeGuncelle(gostergeData, 2, EKSI, BASA_EKLE);
         else
             gosterge.gostergeGuncelle(gostergeData, 2, DERECE, SONA_EKLE);
         break;
     case GOSTERGE_MODU_SET:
-        gostergeData = dereceSet/10;
+        gostergeData = dereceSet;
         gosterge.gostergeGuncelle(gostergeData, 1, C, BASA_EKLE);
         break;
     case GOSTERGE_MODU_TOLERANS:
-        gostergeData = tolerans/10;
+        gostergeData = tolerans;
         gosterge.gostergeGuncelle(gostergeData, 1, T, BASA_EKLE);
         break;
     default:
@@ -179,11 +179,13 @@ void gostergeYaz()
 
 /*
     DS18B20 sensöründen sıcaklık bilgisini okur.
+    Sensörden gelen bilgiyi 10 ile çarparak ondalık haneyide tam sayı hanesine alıp
+    float işlem yapmaktan kaçınıyoruz.
 */
 int dereceOlc()
 {
     sensor.requestTemperatures();
-    return (int)(sensor.getTempCByIndex(0) * 100);
+    return (int)(sensor.getTempCByIndex(0) * 10);
 }
 
 /*
@@ -246,9 +248,9 @@ void setData(){
     {
         btnKontrol = butonKontrol();
         if(btnKontrol == BUTON_ARTI_BASILDI)
-            dereceSet+=10;
+            dereceSet+=1;
         else if(btnKontrol == BUTON_EKSI_BASILDI)
-            dereceSet-=10;
+            dereceSet-=1;
     }
 
     gostergeModu = GOSTERGE_MODU_TOLERANS;
@@ -257,10 +259,10 @@ void setData(){
     {
         btnKontrol = butonKontrol();
         if(btnKontrol == BUTON_ARTI_BASILDI)
-            tolerans+=10;
+            tolerans+=1;
         else if(btnKontrol == BUTON_EKSI_BASILDI){
-            if(tolerans >10)
-                tolerans-=10;
+            if(tolerans >1)
+                tolerans-=1;
         }
     }
     sistem.eepDereceSet = dereceSet;
