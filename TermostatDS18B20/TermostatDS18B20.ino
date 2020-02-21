@@ -160,7 +160,7 @@ void gostergeYaz()
     case GOSTERGE_MODU_DERECE:
         gostergeData = derece;
         if (gostergeData < 0)
-            gosterge.gostergeGuncelle(gostergeData, 2, EKSI, BASA_EKLE);
+            gosterge.gostergeGuncelle(gostergeData, 1, EKSI, BASA_EKLE);
         else
             gosterge.gostergeGuncelle(gostergeData, 2, DERECE, SONA_EKLE);
         break;
