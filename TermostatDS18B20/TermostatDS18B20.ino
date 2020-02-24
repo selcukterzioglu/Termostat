@@ -162,7 +162,7 @@ void gostergeYaz()
         if (gostergeData < 0)
             gosterge.gostergeGuncelle(gostergeData, 1, EKSI, BASA_EKLE);
         else
-            gosterge.gostergeGuncelle(gostergeData, 2, DERECE, SONA_EKLE);
+            gosterge.gostergeGuncelle(gostergeData*10, 2, DERECE, SONA_EKLE);
         break;
     case GOSTERGE_MODU_SET:
         gostergeData = dereceSet;
@@ -184,7 +184,7 @@ void gostergeYaz()
 */
 int dereceOlc()
 {
-    sensor.requestTemperatures();
+    sensor.requestTemperatures();    
     return (int)(sensor.getTempCByIndex(0) * 10);
 }
 
